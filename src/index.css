@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html, body, #root {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+
+  body {
+    @apply bg-surface-light text-text-default font-sans antialiased;
+  }
+
+  h1 {
+    @apply text-eva-h4;
+  }
+
+  p {
+    @apply text-eva-body;
+  }
+}
