@@ -1,11 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
 import { MdSend, MdCloseFullscreen, MdFullscreen } from 'react-icons/md';
+import ChangeRequestWidget from './ChangeRequestWidget';
 
 type ChatMode = 'closed' | 'side' | 'floating';
 
 type Message = {
   text: string;
   isUser: boolean;
+  type?: 'text' | 'widget';
+  widgetType?: 'changeRequest';
 };
 
 interface SideChatProps {
@@ -96,8 +99,23 @@ export default function SideChat({ messages, onAddMessage, onEndChat, chatMode, 
               </p>
             </div>
           ) : (
-            messages.map((message, index) => (
-              message.isUser ? (
+            messages.map((message, index) => {
+              // Render widget if message type is widget
+              if (message.type === 'widget' && message.widgetType === 'changeRequest') {
+                return (
+                  <div key={index} className="flex justify-start w-full">
+                    <ChangeRequestWidget
+                      onComplete={(data) => {
+                        // Handle widget completion - could add a success message
+                        console.log('Change request submitted:', data);
+                      }}
+                    />
+                  </div>
+                );
+              }
+
+              // Render text messages
+              return message.isUser ? (
                 // User message - with bubble
                 <div key={index} className="flex justify-end w-full">
                   <div className="bg-[#f0f0f0] border-[1.5px] border-[#e3e3e3] rounded-tl-eva-xl rounded-tr-eva-xl rounded-bl-eva-xl rounded-br-[6px] px-eva-150 py-eva-100 max-w-[80%]">
@@ -113,8 +131,8 @@ export default function SideChat({ messages, onAddMessage, onEndChat, chatMode, 
                     {message.text}
                   </p>
                 </div>
-              )
-            ))
+              );
+            })
           )}
           <div ref={messagesEndRef} />
         </div>

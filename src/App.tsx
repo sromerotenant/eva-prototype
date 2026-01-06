@@ -11,6 +11,8 @@ type ChatMode = 'closed' | 'side' | 'floating';
 type Message = {
   text: string;
   isUser: boolean;
+  type?: 'text' | 'widget';
+  widgetType?: 'changeRequest';
 };
 
 // Eva response mapping - matches action keywords to responses
@@ -48,7 +50,7 @@ function App() {
   const handleInputSubmit = (message: string) => {
     if (message.trim()) {
       // Add user message
-      const userMessage: Message = { text: message.trim(), isUser: true };
+      const userMessage: Message = { text: message.trim(), isUser: true, type: 'text' };
       setMessages((prev) => [...prev, userMessage]);
       
       // Open chat if closed
@@ -56,11 +58,34 @@ function App() {
         setChatMode('side');
       }
       
-      // Get Eva's response
-      const evaResponse = getEvaResponse(message.trim());
-      setTimeout(() => {
-        setMessages((prev) => [...prev, { text: evaResponse, isUser: false }]);
-      }, 500); // Small delay to simulate response time
+      // Check if this is a change request trigger
+      const lowerMessage = message.trim().toLowerCase();
+      if (lowerMessage.includes('change request') || lowerMessage.includes('submit change')) {
+        // Add Eva's text message first
+        setTimeout(() => {
+          setMessages((prev) => [...prev, { 
+            text: "I can certainly help you with that. To get started, Select request type",
+            isUser: false, 
+            type: 'text'
+          }]);
+        }, 500);
+        
+        // Then add widget
+        setTimeout(() => {
+          setMessages((prev) => [...prev, { 
+            text: '', 
+            isUser: false, 
+            type: 'widget',
+            widgetType: 'changeRequest'
+          }]);
+        }, 800);
+      } else {
+        // Get Eva's response
+        const evaResponse = getEvaResponse(message.trim());
+        setTimeout(() => {
+          setMessages((prev) => [...prev, { text: evaResponse, isUser: false, type: 'text' }]);
+        }, 500); // Small delay to simulate response time
+      }
     }
   };
 
@@ -70,15 +95,41 @@ function App() {
       setChatMode('side');
     }
     
-    // Immediately add user message
-    const userMessage: Message = { text: actionText, isUser: true };
-    setMessages((prev) => [...prev, userMessage]);
-    
-    // Get and add Eva's response immediately after
-    const evaResponse = getEvaResponse(actionText);
-    setTimeout(() => {
-      setMessages((prev) => [...prev, { text: evaResponse, isUser: false }]);
-    }, 300); // Small delay for conversational feel
+    // Check if this is a "Submit Change Request" action
+    if (actionText.toLowerCase().includes('change request') || actionText.toLowerCase().includes('submit change')) {
+      // Add user message
+      const userMessage: Message = { text: actionText, isUser: true, type: 'text' };
+      setMessages((prev) => [...prev, userMessage]);
+      
+      // Add Eva's text message first
+      setTimeout(() => {
+        setMessages((prev) => [...prev, { 
+          text: "I can certainly help you with that. To get started, Select request type",
+          isUser: false, 
+          type: 'text'
+        }]);
+      }, 300);
+      
+      // Then add widget
+      setTimeout(() => {
+        setMessages((prev) => [...prev, { 
+          text: '', 
+          isUser: false, 
+          type: 'widget',
+          widgetType: 'changeRequest'
+        }]);
+      }, 600);
+    } else {
+      // For other actions, use normal text flow
+      const userMessage: Message = { text: actionText, isUser: true, type: 'text' };
+      setMessages((prev) => [...prev, userMessage]);
+      
+      // Get and add Eva's response immediately after
+      const evaResponse = getEvaResponse(actionText);
+      setTimeout(() => {
+        setMessages((prev) => [...prev, { text: evaResponse, isUser: false, type: 'text' }]);
+      }, 300); // Small delay for conversational feel
+    }
   };
 
   const handleEndChat = () => {
@@ -96,14 +147,37 @@ function App() {
 
   const handleAddMessage = (message: string) => {
     if (message.trim()) {
-      const userMessage: Message = { text: message.trim(), isUser: true };
+      const userMessage: Message = { text: message.trim(), isUser: true, type: 'text' };
       setMessages((prev) => [...prev, userMessage]);
       
-      // Get Eva's response
-      const evaResponse = getEvaResponse(message.trim());
-      setTimeout(() => {
-        setMessages((prev) => [...prev, { text: evaResponse, isUser: false }]);
-      }, 500);
+      // Check if this is a change request trigger
+      const lowerMessage = message.trim().toLowerCase();
+      if (lowerMessage.includes('change request') || lowerMessage.includes('submit change')) {
+        // Add Eva's text message first
+        setTimeout(() => {
+          setMessages((prev) => [...prev, { 
+            text: "I can certainly help you with that. To get started, Select request type",
+            isUser: false, 
+            type: 'text'
+          }]);
+        }, 500);
+        
+        // Then add widget
+        setTimeout(() => {
+          setMessages((prev) => [...prev, { 
+            text: '', 
+            isUser: false, 
+            type: 'widget',
+            widgetType: 'changeRequest'
+          }]);
+        }, 800);
+      } else {
+        // Get Eva's response
+        const evaResponse = getEvaResponse(message.trim());
+        setTimeout(() => {
+          setMessages((prev) => [...prev, { text: evaResponse, isUser: false, type: 'text' }]);
+        }, 500);
+      }
     }
   };
 
