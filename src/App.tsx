@@ -47,7 +47,7 @@ function App() {
   const resizeStartX = useRef<number>(0);
   const resizeStartWidth = useRef<number>(643);
 
-  const handleInputSubmit = (message: string) => {
+  const handleInputSubmit = (message: string, files?: File[]) => {
     if (message.trim()) {
       // Add user message
       const userMessage: Message = { text: message.trim(), isUser: true, type: 'text' };
@@ -145,7 +145,7 @@ function App() {
     // Note: Input fields will be cleared via key prop remounting
   };
 
-  const handleAddMessage = (message: string) => {
+  const handleAddMessage = (message: string, files?: File[]) => {
     if (message.trim()) {
       const userMessage: Message = { text: message.trim(), isUser: true, type: 'text' };
       setMessages((prev) => [...prev, userMessage]);
