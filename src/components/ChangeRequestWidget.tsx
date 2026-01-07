@@ -124,10 +124,6 @@ export default function ChangeRequestWidget({ onComplete }: ChangeRequestWidgetP
     return (
       <div className="bg-white border-l-4 border-[#009cdb] border-[2px] border-r border-t border-b border-[#e3e3e3] border-solid rounded-eva-l shadow-[16px_23px_38.4px_-1px_rgba(0,0,0,0.08)] p-6 w-full max-w-[400px] backdrop-blur-[12.1px]" style={{ borderImage: 'none' }}>
         <div className="flex flex-col gap-5">
-          <p className="text-eva-body text-[#4f4559] leading-[1.4]">
-            How can I help you with a Change Request today?
-          </p>
-          
           <div className="flex flex-col gap-5 max-h-[400px] overflow-y-auto pr-2">
             {CHANGE_REQUEST_FLOW.map((category) => (
               <div key={category.id} className="flex flex-col gap-4">
