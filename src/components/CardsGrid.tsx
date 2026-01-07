@@ -27,11 +27,10 @@ function Card({ icon, title, description }: CardProps) {
 type ChatMode = 'closed' | 'side' | 'floating';
 
 interface CardsGridProps {
-  isChatOpen?: boolean;
   chatMode?: ChatMode;
 }
 
-export default function CardsGrid({ isChatOpen = false, chatMode = 'closed' }: CardsGridProps) {
+export default function CardsGrid({ chatMode = 'closed' }: CardsGridProps) {
   const cards = [
     {
       icon: <MdAssignment className="w-6 h-6 sm:w-7 sm:h-7 text-brand-accent" />,

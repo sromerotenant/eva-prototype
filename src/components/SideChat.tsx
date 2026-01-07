@@ -14,12 +14,13 @@ type Message = {
 interface SideChatProps {
   messages: Message[];
   onAddMessage: (message: string) => void;
+  onAddEvaMessage?: (message: string) => void;
   onEndChat: () => void;
   chatMode: ChatMode;
   onToggleChatMode?: () => void;
 }
 
-export default function SideChat({ messages, onAddMessage, onEndChat, chatMode, onToggleChatMode }: SideChatProps) {
+export default function SideChat({ messages, onAddMessage, onAddEvaMessage, onEndChat, chatMode, onToggleChatMode }: SideChatProps) {
   const [inputValue, setInputValue] = useState('');
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -129,8 +130,14 @@ export default function SideChat({ messages, onAddMessage, onEndChat, chatMode, 
                   <div key={index} className="flex justify-start w-full">
                     <ChangeRequestWidget
                       onComplete={(data) => {
-                        // Handle widget completion - could add a success message
+                        // Handle widget completion - add success message
                         console.log('Change request submitted:', data);
+                        // Add success message from Eva
+                        if (onAddEvaMessage) {
+                          setTimeout(() => {
+                            onAddEvaMessage('Your change request has been submitted successfully! I\'ve received all the information and will process it shortly. You should receive a confirmation email within the next few minutes.');
+                          }, 500);
+                        }
                       }}
                     />
                   </div>

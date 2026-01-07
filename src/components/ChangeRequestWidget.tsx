@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { CHANGE_REQUEST_FLOW, type ChangeRequestCategory, type ChangeRequestSubOption } from '../data/changeRequestLogic';
 
 type ViewState = 'category' | 'details';
@@ -103,7 +103,7 @@ export default function ChangeRequestWidget({ onComplete }: ChangeRequestWidgetP
   // Processing/Loading State
   if (isProcessing && processingCategory) {
     return (
-      <div className="bg-white border-l-4 border-[#009cdb] border-[2px] border-r border-t border-b border-[#e3e3e3] border-solid rounded-eva-l shadow-[16px_23px_38.4px_-1px_rgba(0,0,0,0.08)] p-6 w-full max-w-[400px] backdrop-blur-[12.1px]" style={{ borderImage: 'none' }}>
+      <div className="bg-white border-[2px] border-[#e3e3e3] border-solid rounded-eva-l shadow-[16px_23px_38.4px_-1px_rgba(0,0,0,0.08)] p-6 w-full max-w-[400px] backdrop-blur-[12.1px]" style={{ borderImage: 'none' }}>
         <div className="flex gap-3 items-center">
           <div className="relative shrink-0 w-8 h-8">
             <div className="absolute inset-0 border-2 border-[#009cdb] border-t-transparent rounded-full animate-spin"></div>
@@ -122,7 +122,7 @@ export default function ChangeRequestWidget({ onComplete }: ChangeRequestWidgetP
   // Category View: Show all categories with sub-options in sections (matching Figma design)
   if (viewState === 'category') {
     return (
-      <div className="bg-white border-l-4 border-[#009cdb] border-[2px] border-r border-t border-b border-[#e3e3e3] border-solid rounded-eva-l shadow-[16px_23px_38.4px_-1px_rgba(0,0,0,0.08)] p-6 w-full max-w-[400px] backdrop-blur-[12.1px]" style={{ borderImage: 'none' }}>
+      <div className="bg-white border-[2px] border-[#e3e3e3] border-solid rounded-eva-l shadow-[16px_23px_38.4px_-1px_rgba(0,0,0,0.08)] p-6 w-full max-w-[400px] backdrop-blur-[12.1px]" style={{ borderImage: 'none' }}>
         <div className="flex flex-col gap-5">
           <div className="flex flex-col gap-5 max-h-[400px] overflow-y-auto pr-2">
             {CHANGE_REQUEST_FLOW.map((category) => (
@@ -222,7 +222,7 @@ export default function ChangeRequestWidget({ onComplete }: ChangeRequestWidgetP
        formData.deactivation_reason?.toLowerCase().includes('management'));
 
     return (
-      <div className="bg-white border-l-4 border-[#009cdb] border-[2px] border-r border-t border-b border-[#e3e3e3] border-solid rounded-eva-l shadow-[16px_23px_38.4px_-1px_rgba(0,0,0,0.08)] p-6 w-full max-w-[400px] backdrop-blur-[12.1px]" style={{ borderImage: 'none' }}>
+      <div className="bg-white border-[2px] border-[#e3e3e3] border-solid rounded-eva-l shadow-[16px_23px_38.4px_-1px_rgba(0,0,0,0.08)] p-6 w-full max-w-[400px] backdrop-blur-[12.1px]" style={{ borderImage: 'none' }}>
         <div className="flex flex-col gap-5">
           <div className="flex items-center gap-2">
             <button

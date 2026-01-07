@@ -4,11 +4,9 @@ type ChatMode = 'closed' | 'side' | 'floating';
 
 interface HeaderProps {
   chatMode: ChatMode;
-  onToggleChatMode?: () => void;
 }
 
-export default function Header({ chatMode, onToggleChatMode }: HeaderProps) {
-  const isChatOpen = chatMode !== 'closed';
+export default function Header({ chatMode }: HeaderProps) {
   const isSideMode = chatMode === 'side';
   
   return (

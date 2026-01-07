@@ -47,7 +47,7 @@ function App() {
   const resizeStartX = useRef<number>(0);
   const resizeStartWidth = useRef<number>(643);
 
-  const handleInputSubmit = (message: string, files?: File[]) => {
+  const handleInputSubmit = (message: string, _files?: File[]) => {
     if (message.trim()) {
       // Add user message
       const userMessage: Message = { text: message.trim(), isUser: true, type: 'text' };
@@ -145,7 +145,7 @@ function App() {
     // Note: Input fields will be cleared via key prop remounting
   };
 
-  const handleAddMessage = (message: string, files?: File[]) => {
+  const handleAddMessage = (message: string, _files?: File[]) => {
     if (message.trim()) {
       const userMessage: Message = { text: message.trim(), isUser: true, type: 'text' };
       setMessages((prev) => [...prev, userMessage]);
@@ -187,6 +187,10 @@ function App() {
     } else if (chatMode === 'floating') {
       setChatMode('side');
     }
+  };
+
+  const handleAddEvaMessage = (text: string) => {
+    setMessages((prev) => [...prev, { text, isUser: false, type: 'text' }]);
   };
 
   const handleMouseDown = (e: React.MouseEvent) => {
@@ -244,7 +248,7 @@ function App() {
       {/* Child A - Left Side: App Content (Header + MainContent) */}
       <div className="flex-1 flex flex-col bg-surface-light transition-all duration-300 overflow-hidden">
         {/* Header - Inside Child A, only spans left section width */}
-        <Header chatMode={chatMode} onToggleChatMode={handleToggleChatMode} />
+        <Header chatMode={chatMode} />
 
         {/* MainContent - Scrollable area with greeting and cards */}
         <div className="flex-1 overflow-y-auto flex flex-col justify-center items-center">
@@ -263,7 +267,7 @@ function App() {
             </div>
 
             {/* Cards Grid */}
-            <CardsGrid isChatOpen={isChatOpen} chatMode={chatMode} />
+            <CardsGrid chatMode={chatMode} />
           </div>
         </div>
       </div>
@@ -282,6 +286,7 @@ function App() {
           <SideChat 
             messages={messages}
             onAddMessage={handleAddMessage}
+            onAddEvaMessage={handleAddEvaMessage}
             onEndChat={handleEndChat}
             chatMode={chatMode}
             onToggleChatMode={handleToggleChatMode}
@@ -295,6 +300,7 @@ function App() {
           <SideChat 
             messages={messages}
             onAddMessage={handleAddMessage}
+            onAddEvaMessage={handleAddEvaMessage}
             onEndChat={handleEndChat}
             chatMode={chatMode}
             onToggleChatMode={handleToggleChatMode}
