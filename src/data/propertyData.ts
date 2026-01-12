@@ -16,10 +16,6 @@ export interface UserIdentity {
   properties: Property[];
 }
 
-// Test Scenario Toggle
-// Set to 'A' for single property, 'B' for multiple properties
-export const TEST_SCENARIO: 'A' | 'B' = 'B';
-
 // Scenario A: Single Property
 const SCENARIO_A_PROPERTIES: Property[] = [
   { id: 'prop-1', name: 'Emerald Bay', code: 'EMB-001' }
@@ -52,12 +48,19 @@ const SCENARIO_B_PROPERTIES: Property[] = [
   { id: 'prop-23', name: 'Oakwood Terrace', code: 'OWT-023' }
 ];
 
+// Test Scenario Toggle
+// Set to 'A' for single property, 'B' for multiple properties
+export const TEST_SCENARIO: 'A' | 'B' = 'B';
+
+// Property mapping by scenario
+const PROPERTIES_BY_SCENARIO: Record<'A' | 'B', Property[]> = {
+  'A': SCENARIO_A_PROPERTIES,
+  'B': SCENARIO_B_PROPERTIES
+};
+
 // Get properties based on scenario
 const getProperties = (): Property[] => {
-  if (TEST_SCENARIO === 'A') {
-    return SCENARIO_A_PROPERTIES;
-  }
-  return SCENARIO_B_PROPERTIES;
+  return PROPERTIES_BY_SCENARIO[TEST_SCENARIO];
 };
 
 // Mock User Identity
