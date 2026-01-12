@@ -52,11 +52,19 @@ const SCENARIO_B_PROPERTIES: Property[] = [
   { id: 'prop-23', name: 'Oakwood Terrace', code: 'OWT-023' }
 ];
 
+// Get properties based on scenario
+const getProperties = (): Property[] => {
+  if (TEST_SCENARIO === 'A') {
+    return SCENARIO_A_PROPERTIES;
+  }
+  return SCENARIO_B_PROPERTIES;
+};
+
 // Mock User Identity
 export const MOCK_USER: UserIdentity = {
   name: 'John Doe',
   role: 'PM',
-  properties: TEST_SCENARIO === 'A' ? SCENARIO_A_PROPERTIES : SCENARIO_B_PROPERTIES
+  properties: getProperties()
 };
 
 /**
