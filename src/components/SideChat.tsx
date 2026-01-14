@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { MdSend, MdCloseFullscreen, MdFullscreen, MdAttachFile } from 'react-icons/md';
 import ChangeRequestWidget from './ChangeRequestWidget';
+import { MOCK_USER } from '../data/propertyData';
 
 type ChatMode = 'closed' | 'side' | 'floating';
 
@@ -134,8 +135,12 @@ export default function SideChat({ messages, onAddMessage, onAddEvaMessage, onEn
                         console.log('Change request submitted:', data);
                         // Add success message from Eva
                         if (onAddEvaMessage) {
+                          const propertyNames = data.propertyIds.map(id => {
+                            const property = MOCK_USER.properties.find(p => p.id === id);
+                            return property ? property.name : `Property ${id}`;
+                          }).join(', ');
                           setTimeout(() => {
-                            onAddEvaMessage('Your change request has been submitted successfully! I\'ve received all the information and will process it shortly. You should receive a confirmation email within the next few minutes.');
+                            onAddEvaMessage(`Your change request has been submitted successfully for ${propertyNames}! I've received all the information and will process it shortly. You should receive a confirmation email within the next few minutes.`);
                           }, 500);
                         }
                       }}
